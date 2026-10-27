@@ -9,7 +9,7 @@ Análise de dados públicos do Bolsa Família por município e região do Brasil
 1. Qual a participação de cada município no total pago pelo programa e qual a cobertura (famílias beneficiárias por domicílio)?
 2. Existe relação entre a renda por pessoa de um município e o valor médio recebido por família?
 3. Quais municípios têm valor por pessoa ou por família muito acima da média nacional, e o que os dados sugerem sobre o motivo?
-4. Como o valor pago evoluiu mês a mês em cada região e quais estados tiveram o maior aumento?
+4. Como o valor pago e a cobertura se distribuem entre regiões e estados, e quão concentrado é o dinheiro entre os municípios?
 
 ## Fontes de dados
 
@@ -18,7 +18,7 @@ Análise de dados públicos do Bolsa Família por município e região do Brasil
 | Portal da Transparência (CGU) | Pagamentos do Bolsa Família por município e mês | https://portaldatransparencia.gov.br/download-de-dados |
 | IBGE (SIDRA) | População, domicílios e renda por município (Censo 2022) | https://sidra.ibge.gov.br |
 
-> Período analisado: _a definir_
+> Período analisado: agosto/2026 (um único mês)
 >
 > Os valores são nominais (sem correção pela inflação).
 
@@ -45,12 +45,18 @@ _Ainda não há resultados. Esta seção será preenchida ao final de cada etapa
 
 ## Limitações
 
-_A preencher durante a análise (por exemplo: recorte de meses, dados desatualizados, valores nominais)._
+- Análise de um único mês (agosto/2026): não mostra evolução ao longo do tempo.
+- Os arquivos de pagamento não trazem o número de pessoas por família, a renda nem o tipo de benefício. A cobertura é calculada como famílias beneficiárias por domicílio, e não como porcentagem de pessoas.
+- Não é possível testar diretamente se valores altos vêm de famílias maiores ou de adicionais do programa.
+- O código de município do Portal da Transparência é o do SIAFI, não o do IBGE. O cruzamento com o Censo usa uma tabela de correspondência e pode deixar municípios sem par.
+- Os valores são nominais.
+
+_Seção a ser completada durante a análise._
 
 ## Diário de progresso
 
-- [ ] Definir perguntas de pesquisa
-- [ ] Baixar dados do Portal da Transparência
+- [x] Definir perguntas de pesquisa
+- [ ] Baixar dados do Portal da Transparência (agosto/2026)
 - [ ] Baixar dados do IBGE
 - [ ] Limpeza e padronização
 - [ ] Análise exploratória
@@ -61,3 +67,4 @@ _A preencher durante a análise (por exemplo: recorte de meses, dados desatualiz
 | Data | O que foi feito |
 |---|---|
 | 22/10/2026 | Definição das perguntas e criação do repositório |
+| 26/10/2026 | Ajuste da pergunta 4 e escolha do recorte: agosto/2026 |
