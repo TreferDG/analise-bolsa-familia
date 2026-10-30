@@ -4,7 +4,7 @@
 
 Análise de dados públicos do Bolsa Família por município e região do Brasil, cruzando os pagamentos do programa com dados demográficos e de renda do IBGE.
 
-![Dashboard](dashboard/Dashboard Bolsa Familia.png)
+![Dashboard](dashboard/Dashboard%20Bolsa%20Familia.png)
 
 ## Perguntas que o projeto quer responder
 
