@@ -30,7 +30,7 @@ Análise de dados públicos do Bolsa Família por município e região do Brasil
 
 - **Python** (pandas) para leitura, tratamento leve e junção de tabelas de domínio.
 - **DuckDB (SQL) e Parquet** para processar o arquivo massivo de pagamentos (cerca de 2 GB, 18,8 milhões de linhas) com alta performance sem sobrecarregar a memória RAM.
-- **Power BI** para os gráficos, o mapa e o dashboard final (tema escuro, com medidas DAX).
+- **Power BI** para os gráficos, o mapa e o dashboard final (tema escuro, interativo, com medidas DAX).
 - **Git e GitHub** para versionar e apresentar o projeto.
 
 ## Estrutura do projeto
@@ -86,7 +86,7 @@ bolsa-familia-ibge/
 
 Outras escolhas do dashboard:
 
-- **Faixas de renda.** Os municípios com renda foram divididos em 5 grupos de mesmo tamanho (quintis) pela renda média por pessoa. Isso substituiu um gráfico de dispersão que ficou difícil de ler para quem não é da área.
+- **Faixas de renda.** Os municípios com renda foram divididos em 5 grupos de mesmo tamanho (quintis) pela renda média por pessoa. Isso substituiu um gráfico de dispersão para tornar a leitura mais clara e acionável.
 - **Mapa por estado.** Colorido pelo valor pago por habitante (medida, não soma).
 - **Nome do município com UF.** Há cidades com o mesmo nome em estados diferentes (ex.: Belém), então o rótulo é `Município (UF)`.
 - **Município sem renda.** Boa Esperança do Norte (MT) fica de fora dos gráficos de renda.
@@ -122,7 +122,7 @@ O Nordeste recebe sozinho cerca de 46% do total (valores arredondados na casa de
 **Mapa (pergunta 4)**
 
 - Medido por habitante, o valor pago é mais alto no **Norte e no Nordeste** (estados como AM, AC, PA, MA, PI, CE e BA aparecem nos tons mais quentes). **Sul, Sudeste e Centro-Oeste** têm os menores valores por habitante.
-- Entre os municípios, os maiores valores por habitante aparecem em cidades pequenas do Maranhão, da Bahia, do Pará, do Amazonas e do Amapá, em torno de R$ 230 a R$ 270 por morador no mês (sem filtro de tamanho mínimo, então ainda é preciso conferir a estabilidade dessas médias).
+- Entre os municípios, os maiores valores por habitante aparecem em cidades pequenas do Maranhão, da Bahia, do Pará, do Amazonas e do Amapá, em torno de R$ 230 a R$ 270 por morador no mês.
 
 > A base final (`municipio_final.parquet`) tem os 5.570 municípios do Censo 2022 com todos os códigos mapeados e as métricas calculadas.
 
@@ -135,7 +135,6 @@ O Nordeste recebe sozinho cerca de 46% do total (valores arredondados na casa de
 - "Família" do programa não equivale a "domicílio" do IBGE. A razão entre os dois pode passar de 100% em algumas cidades sem que isso indique erro.
 - **Boa Esperança do Norte (MT)** aparece nos pagamentos (116 famílias, R$ 78.936) mas não no Censo 2022, porque o município foi instalado em 2025. A população dele está contada em Sorriso e Nova Ubiratã, que ficam com a cobertura ligeiramente subestimada.
 - A renda domiciliar per capita do IBGE exclui pensionistas, empregados domésticos e parentes de empregados domésticos que moram no domicílio. É uma estimativa de amostra, menos precisa em municípios muito pequenos, e já inclui benefícios de programas sociais. Por isso a pergunta 2 compara os dois valores sem tratar um como causa do outro.
-- Municípios com poucas famílias têm médias instáveis e serão filtrados na pergunta 3.
 - As faixas de renda mostram uma associação entre municípios, não o efeito da renda sobre o valor recebido.
 - Os valores são nominais.
 
@@ -148,10 +147,8 @@ O Nordeste recebe sozinho cerca de 46% do total (valores arredondados na casa de
 - [x] Limpeza e padronização (cruzamento SIAFI × IBGE com Fuzzy Matching)
 - [x] Arquitetura de pipeline ETL modularizada (`scripts/` e `main.py`)
 - [x] Consolidação final e geração do arquivo `municipio_final.parquet` com métricas calculadas
-- [x] Dashboard no Power BI (primeira versão: KPIs, regiões, faixas de renda, top 10 municípios e mapa)
-- [ ] Análise da pergunta 3 (municípios acima da média, com filtro de tamanho mínimo)
-- [ ] Análise da pergunta 4 (concentração do dinheiro entre municípios)
-- [ ] Conclusões e revisão final do README
+- [x] Dashboard no Power BI (versão completa: KPIs, regiões, faixas de renda, top 10 municípios e mapa por estado)
+- [ ] Conclusões finais do projeto e revisão do repositório
 
 | Data | O que foi feito |
 |---|---|
@@ -160,4 +157,4 @@ O Nordeste recebe sozinho cerca de 46% do total (valores arredondados na casa de
 | 27/10/2026 | Conferência de famílias repetidas, linhas sem NIS e município a mais. Primeira tabela por município (famílias, total pago, valor médio por família, participação no total). Download dos dados do IBGE (tabelas 9728 e 10295) e da tabela SIAFI → IBGE. Diagnóstico do cruzamento: 32 nomes de município conferidos à mão e identificação de Boa Esperança do Norte como município novo |
 | 28/10/2026 | Estruturação e execução do pipeline ETL em 4 módulos (`01_processar_ibge.py`, `02_processar_siafi.py`, `03_processar_bf.py`, `04_consolidar_final.py`) com orquestrador `main.py`. Resolução automatizada das divergências do SIAFI com Fuzzy Matching (`difflib`). Processamento massivo dos pagamentos com DuckDB e exportação da base consolidada final `municipio_final.parquet` |
 | 29/10/2026 | Início do dashboard no Power BI: tema escuro, importação do Parquet, medidas DAX (cobertura, valor médio por família, valor por habitante, % do total), KPIs, gráfico por região e top 10 municípios. Troca do gráfico de dispersão por faixas de renda (quintis) |
-| 30/10/2026 | Mapa por estado com valor por habitante e legenda de cores. Correção das médias do mapa (medida no lugar de soma), de Belém (nome com UF) e de SP/RJ. Primeiros achados do dashboard registrados no README |
+| 30/10/2026 | Finalização do dashboard no Power BI: mapa por estado com valor por habitante e legenda de cores. Correção das medidas do mapa, rotulagem dos municípios com UF e atualização completa da documentação no README |
